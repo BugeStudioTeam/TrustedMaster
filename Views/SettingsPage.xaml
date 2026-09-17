@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TrustedMaster.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="40" RowSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold"/>
+
+        <StackPanel Grid.Row="1" Spacing="15">
+            <StackPanel Orientation="Horizontal" Spacing="20">
+                <TextBlock Text="Application Language:" VerticalAlignment="Center" FontSize="16"/>
+                <ComboBox x:Name="LanguageComboBox" Width="150">
+                    <ComboBoxItem Content="English" IsSelected="True"/>
+                    <ComboBoxItem Content="简体中文"/>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="20">
+                <TextBlock Text="Default Privilege Level:" VerticalAlignment="Center" FontSize="16"/>
+                <ComboBox x:Name="DefaultPrivilegeComboBox" Width="200">
+                    <ComboBoxItem Content="Administrator"/>
+                    <ComboBoxItem Content="SYSTEM"/>
+                    <ComboBoxItem Content="TrustedInstaller"/>
+                </ComboBox>
+            </StackPanel>
+
+            <ToggleSwitch x:Name="AutoRunToggle" Header="Auto-run on startup" OnContent="Yes" OffContent="No" IsOn="True"/>
+
+            <Button Content="Apply Settings" Click="OnApplySettingsClick" Style="{StaticResource AccentButtonStyle}"/>
+        </StackPanel>
+
+        <TextBlock x:Name="SettingsStatusText" Grid.Row="2" Text="Settings loaded." FontSize="14" Opacity="0.6" VerticalAlignment="Bottom"/>
+    </Grid>
+</Page>

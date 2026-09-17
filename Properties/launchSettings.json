@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TrustedMaster (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TrustedMaster (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
