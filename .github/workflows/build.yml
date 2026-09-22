@@ -1,0 +1,56 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        configuration: [Release]
+        platform: [x64]
+
+    env:
+      Solution_Name: YourApp.sln
+      Appx_Package_Dir: Packages\
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore dependencies
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    - name: Build and Package
+      run: >
+        msbuild $env:Solution_Name
+        /p:Configuration=$env:Configuration
+        /p:Platform=$env:Platform
+        /p:UapAppxPackageBuildMode=SideloadOnly
+        /p:AppxBundle=Never
+        /p:AppxPackageDir="$env:Appx_Package_Dir"
+        /p:GenerateAppxPackageOnBuild=true
+      env:
+        Configuration: ${{ matrix.configuration }}
+        Platform: ${{ matrix.platform }}
+
+    - name: Upload MSIX Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: MSIX-Package-${{ matrix.platform }}
+        path: ${{ env.Solution_Name }}\Packages
