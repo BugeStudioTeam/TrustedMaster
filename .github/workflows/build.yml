@@ -1,4 +1,4 @@
-name: Build
+name: WinUI 3 CI Build
 
 on:
   push:
@@ -15,10 +15,6 @@ jobs:
         configuration: [Release]
         platform: [x64]
 
-    env:
-      Solution_Name: YourApp.sln
-      Appx_Package_Dir: Packages\
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -32,25 +28,19 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 
     - name: Restore dependencies
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      run: msbuild TrustedMaster.csproj /t:Restore /p:Configuration=${{ matrix.configuration }}
 
     - name: Build and Package
       run: >
-        msbuild $env:Solution_Name
-        /p:Configuration=$env:Configuration
-        /p:Platform=$env:Platform
+        msbuild TrustedMaster.csproj
+        /p:Configuration=${{ matrix.configuration }}
+        /p:Platform=${{ matrix.platform }}
         /p:UapAppxPackageBuildMode=SideloadOnly
         /p:AppxBundle=Never
-        /p:AppxPackageDir="$env:Appx_Package_Dir"
         /p:GenerateAppxPackageOnBuild=true
-      env:
-        Configuration: ${{ matrix.configuration }}
-        Platform: ${{ matrix.platform }}
 
     - name: Upload MSIX Artifact
       uses: actions/upload-artifact@v4
       with:
         name: MSIX-Package-${{ matrix.platform }}
-        path: ${{ env.Solution_Name }}\Packages
+        path: Packages
