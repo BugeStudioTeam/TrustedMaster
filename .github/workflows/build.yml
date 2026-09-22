@@ -47,3 +47,40 @@ jobs:
       with:
         name: MSIX-Package-${{ matrix.platform }}
         path: Packages
+        if-no-files-found: error
+
+    - name: Write Job Summary
+      if: always()
+      shell: pwsh
+      run: |
+        $artifactUrl = "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        $files = Get-ChildItem -Path "Packages" -Recurse -File -ErrorAction SilentlyContinue |
+                 Where-Object { $_.Extension -in ".msix", ".msixbundle", ".appx", ".appxbundle" }
+
+        $summary = @()
+        $summary += "## Build Summary"
+        $summary += ""
+        $summary += "| Item | Value |"
+        $summary += "|------|-------|"
+        $summary += "| Configuration | ``${{ matrix.configuration }}`` |"
+        $summary += "| Platform | ``${{ matrix.platform }}`` |"
+        $summary += "| Commit | ``${{ github.sha }}`` |"
+        $summary += "| Run | [${{ github.run_id }}]($artifactUrl) |"
+        $summary += ""
+        $summary += "## Artifacts"
+        $summary += ""
+
+        if ($files.Count -eq 0) {
+          $summary += "> No MSIX package was produced."
+        } else {
+          $summary += "| File | Size (MB) |"
+          $summary += "|------|-----------|"
+          foreach ($f in $files) {
+            $sizeMB = [math]::Round($f.Length / 1MB, 2)
+            $summary += "| ``$($f.Name)`` | $sizeMB |"
+          }
+          $summary += ""
+          $summary += "Download from the **Artifacts** section at the bottom of this page."
+        }
+
+        $summary -join "`n" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8
