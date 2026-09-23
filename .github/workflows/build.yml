@@ -40,13 +40,41 @@ jobs:
         /p:PublishProfile=
         /p:UapAppxPackageBuildMode=SideloadOnly
         /p:AppxBundle=Never
+        /p:AppxPackageDir="${{ github.workspace }}\Packages\"
         /p:GenerateAppxPackageOnBuild=true
+
+    - name: List build output
+      if: always()
+      shell: pwsh
+      run: |
+        Write-Host "=== Repository root ==="
+        Get-ChildItem -Path . -Force | Select-Object Name, Mode
+        Write-Host ""
+        Write-Host "=== Searching for MSIX files ==="
+        Get-ChildItem -Path . -Recurse -File -Include *.msix,*.msixbundle,*.appx,*.appxbundle -ErrorAction SilentlyContinue |
+          Select-Object FullName, Length
+        Write-Host ""
+        Write-Host "=== Packages folder ==="
+        if (Test-Path "Packages") {
+          Get-ChildItem -Path "Packages" -Recurse -Force | Select-Object FullName
+        } else {
+          Write-Host "Packages folder does NOT exist"
+        }
+        Write-Host ""
+        Write-Host "=== bin folder tree ==="
+        if (Test-Path "bin") {
+          Get-ChildItem -Path "bin" -Recurse -Directory | Select-Object FullName
+        }
 
     - name: Upload MSIX Artifact
       uses: actions/upload-artifact@v4
       with:
         name: MSIX-Package-${{ matrix.platform }}
-        path: Packages
+        path: |
+          Packages/**/*.msix
+          Packages/**/*.msixbundle
+          Packages/**/*.appx
+          Packages/**/*.appxbundle
         if-no-files-found: error
 
     - name: Write Job Summary
@@ -54,8 +82,7 @@ jobs:
       shell: pwsh
       run: |
         $artifactUrl = "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        $files = Get-ChildItem -Path "Packages" -Recurse -File -ErrorAction SilentlyContinue |
-                 Where-Object { $_.Extension -in ".msix", ".msixbundle", ".appx", ".appxbundle" }
+        $files = Get-ChildItem -Path "." -Recurse -File -Include *.msix,*.msixbundle,*.appx,*.appxbundle -ErrorAction SilentlyContinue
 
         $summary = @()
         $summary += "## Build Summary"
@@ -77,7 +104,7 @@ jobs:
           $summary += "|------|-----------|"
           foreach ($f in $files) {
             $sizeMB = [math]::Round($f.Length / 1MB, 2)
-            $summary += "| ``$($f.Name)`` | $sizeMB |"
+            $summary += "| ``$($f.FullName.Replace($PWD, '.'))`` | $sizeMB |"
           }
           $summary += ""
           $summary += "Download from the **Artifacts** section at the bottom of this page."
