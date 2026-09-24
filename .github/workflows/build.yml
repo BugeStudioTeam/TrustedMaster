@@ -1,4 +1,4 @@
-name: WinUI 3 CI Build
+name: Build
 
 on:
   push:
