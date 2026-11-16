@@ -27,6 +27,12 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
+    - name: Decode signing certificate
+      shell: pwsh
+      run: |
+        $bytes = [System.Convert]::FromBase64String("${{ secrets.PFW_BASE64 }}")
+        [System.IO.File]::WriteAllBytes("${{ github.workspace }}\GitHubActionsWorkflow.pfx", $bytes)
+
     - name: Restore dependencies
       run: msbuild TrustedMaster.csproj /t:Restore /p:Configuration=${{ matrix.configuration }}
 
@@ -40,8 +46,17 @@ jobs:
         /p:PublishProfile=
         /p:UapAppxPackageBuildMode=SideloadOnly
         /p:AppxBundle=Never
+        /p:PackageCertificateKeyFile="${{ github.workspace }}\GitHubActionsWorkflow.pfx"
+        /p:PackageCertificatePassword="${{ secrets.PFX_PASSWORD }}"
+        /p:AppxPackageSigningTimestampServerUrl=http://timestamp.digicert.com
+        /p:AppxPackageSigningTimestampDigestAlgorithm=SHA256
         /p:AppxPackageDir="${{ github.workspace }}\Packages\"
         /p:GenerateAppxPackageOnBuild=true
+
+    - name: Remove signing certificate
+      if: always()
+      shell: pwsh
+      run: Remove-Item -Path "${{ github.workspace }}\GitHubActionsWorkflow.pfx" -Force -ErrorAction SilentlyContinue
 
     - name: List build output
       if: always()
@@ -59,11 +74,6 @@ jobs:
           Get-ChildItem -Path "Packages" -Recurse -Force | Select-Object FullName
         } else {
           Write-Host "Packages folder does NOT exist"
-        }
-        Write-Host ""
-        Write-Host "=== bin folder tree ==="
-        if (Test-Path "bin") {
-          Get-ChildItem -Path "bin" -Recurse -Directory | Select-Object FullName
         }
 
     - name: Upload MSIX Artifact
