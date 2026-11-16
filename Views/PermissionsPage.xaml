@@ -36,10 +36,11 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Grid Width="24" Height="24" VerticalAlignment="Center">
-                                <FontIcon Glyph="&#xE7C3;" FontSize="24"/>
-                                <Image Source="{x:Bind Icon}" Stretch="Uniform"/>
-                            </Grid>
+                            <Border Width="32" Height="32" CornerRadius="8" Background="{ThemeResource AccentFillColorDefaultBrush}" VerticalAlignment="Center">
+                                <Grid>
+                                    <Image Width="24" Height="24" Source="{x:Bind Icon}" Stretch="Uniform"/>
+                                </Grid>
+                            </Border>
 
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                 <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>

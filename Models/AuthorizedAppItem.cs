@@ -24,7 +24,7 @@ namespace TrustedMaster.Models
                 Name = app.Name,
                 UserMode = app.UserMode,
                 LastRunText = app.LastRunText,
-                Icon = await FileIconProvider.GetIconAsync(app.Path, 24)
+                Icon = await FileIconProvider.GetIconAsync(app.Path, 32)
             };
         }
     }
