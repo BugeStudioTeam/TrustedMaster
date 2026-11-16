@@ -12,8 +12,18 @@
     <WinUISDKReferences>false</WinUISDKReferences>
     <EnableMsixTooling>false</EnableMsixTooling>
     <WindowsPackageType>None</WindowsPackageType>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="TrustedMaster.ExplorerCommand\**" />
+    <Content Remove="TrustedMaster.ExplorerCommand\**" />
+    <None Remove="TrustedMaster.ExplorerCommand\**" />
+    <Page Remove="TrustedMaster.ExplorerCommand\**" />
+    <ApplicationDefinition Remove="TrustedMaster.ExplorerCommand\**" />
+    <EmbeddedResource Remove="TrustedMaster.ExplorerCommand\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -40,4 +50,27 @@
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <ExplorerCommandRid Condition="'$(Platform)' == 'x86'">win-x86</ExplorerCommandRid>
+    <ExplorerCommandRid Condition="'$(Platform)' == 'ARM64'">win-arm64</ExplorerCommandRid>
+    <ExplorerCommandRid Condition="'$(ExplorerCommandRid)' == ''">win-x64</ExplorerCommandRid>
+    <ExplorerCommandSelfContained>false</ExplorerCommandSelfContained>
+  </PropertyGroup>
+
+  <Target Name="PrepareExplorerCommand" BeforeTargets="BeforeBuild">
+    <MSBuild
+        Projects="$(MSBuildProjectDirectory)\TrustedMaster.ExplorerCommand\TrustedMaster.ExplorerCommand.csproj"
+        Targets="Restore;Build"
+        Properties="Configuration=$(Configuration);Platform=$(Platform);RuntimeIdentifier=$(ExplorerCommandRid);SelfContained=$(ExplorerCommandSelfContained)"
+        RemoveProperties="PublishTrimmed;PublishReadyToRun;PublishSingleFile;PublishProfile;TargetFramework" />
+
+    <ItemGroup>
+      <Content Include="$(MSBuildProjectDirectory)\TrustedMaster.ExplorerCommand\bin\$(Configuration)\net8.0-windows\$(ExplorerCommandRid)\TrustedMaster.ExplorerCommand.*">
+        <Link>%(Filename)%(Extension)</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+  </Target>
 </Project>

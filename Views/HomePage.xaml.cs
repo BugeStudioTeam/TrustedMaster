@@ -24,9 +24,11 @@ namespace TrustedMaster.Views
 
         private void ApplyDefaults()
         {
+            ElevationUser defaultUser = _settings.DefaultUserMode.FromTag();
+
             foreach (object item in UserModeComboBox.Items)
             {
-                if (item is ComboBoxItem comboBoxItem && comboBoxItem.Tag is string tag && string.Equals(tag, _settings.DefaultUserMode, StringComparison.OrdinalIgnoreCase))
+                if (item is ComboBoxItem comboBoxItem && comboBoxItem.Tag is string tag && ElevationUserExtensions.FromTag(tag) == defaultUser)
                 {
                     UserModeComboBox.SelectedItem = comboBoxItem;
                     break;
@@ -84,7 +86,7 @@ namespace TrustedMaster.Views
 
             ElevationUser user = GetSelectedUser();
             bool enableAllPrivileges = EnableAllPrivilegesCheckBox.IsChecked == true;
-            string userDisplayName = GetUserDisplayName(user);
+            string userDisplayName = user.ToDisplayName();
             string fileName = Path.GetFileName(applicationPath);
 
             RunButton.IsEnabled = false;
@@ -112,33 +114,10 @@ namespace TrustedMaster.Views
         {
             if (UserModeComboBox.SelectedItem is ComboBoxItem item && item.Tag is string tag)
             {
-                switch (tag)
-                {
-                    case "System":
-                        return ElevationUser.System;
-                    case "CurrentUser":
-                        return ElevationUser.CurrentUser;
-                    case "CurrentProcess":
-                        return ElevationUser.CurrentProcess;
-                }
+                return ElevationUserExtensions.FromTag(tag);
             }
 
             return ElevationUser.TrustedInstaller;
-        }
-
-        private static string GetUserDisplayName(ElevationUser user)
-        {
-            switch (user)
-            {
-                case ElevationUser.System:
-                    return "SYSTEM";
-                case ElevationUser.CurrentUser:
-                    return "Current User";
-                case ElevationUser.CurrentProcess:
-                    return "Current Process";
-                default:
-                    return "TrustedInstaller";
-            }
         }
 
         private void ShowStatus(InfoBarSeverity severity, string message)

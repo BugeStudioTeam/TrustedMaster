@@ -527,6 +527,7 @@ namespace TrustedMaster.Services
         private static string ResolveApplicationPath(string applicationPath)
         {
             string expanded = Environment.ExpandEnvironmentVariables(applicationPath.Trim().Trim('"'));
+            expanded = ShortcutResolver.Resolve(expanded);
             if (File.Exists(expanded))
             {
                 return Path.GetFullPath(expanded);

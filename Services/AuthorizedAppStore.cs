@@ -22,6 +22,14 @@ namespace TrustedMaster.Services
             }
         }
 
+        public static AuthorizedApp? Find(string applicationPath)
+        {
+            lock (SyncRoot)
+            {
+                return Read().FirstOrDefault(item => string.Equals(item.Path, applicationPath, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
         public static void Record(string applicationPath, string userMode, bool enableAllPrivileges)
         {
             lock (SyncRoot)

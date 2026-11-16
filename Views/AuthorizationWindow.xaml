@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="TrustedMaster.Views.AuthorizationWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Run as TrustedMaster">
+
+    <Grid Padding="28" RowSpacing="16" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid ColumnSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Width="48" Height="48" CornerRadius="8" Background="{ThemeResource AccentFillColorDefaultBrush}">
+                <FontIcon Glyph="&#xE72E;" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
+            </Border>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                <TextBlock x:Name="ApplicationNameText" FontSize="20" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="PublisherText" Opacity="0.7" TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+        </Grid>
+
+        <TextBlock x:Name="QuestionText" Grid.Row="1" FontSize="16" TextWrapping="Wrap"/>
+
+        <StackPanel Grid.Row="2" Spacing="4">
+            <TextBlock x:Name="OriginText" Opacity="0.8" TextWrapping="Wrap"/>
+            <TextBlock x:Name="UserText" Opacity="0.8" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <CheckBox x:Name="EnableAllPrivilegesCheckBox" Grid.Row="3" Content="Enable All Privileges"/>
+
+        <InfoBar x:Name="StatusInfoBar" Grid.Row="4" IsOpen="False" IsClosable="False" VerticalAlignment="Top"/>
+
+        <Grid Grid.Row="5" ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ProgressRing x:Name="RunProgressRing" Width="20" Height="20" IsActive="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <Button Grid.Column="1" Content="Cancel" MinWidth="96" Click="OnCancelClick"/>
+
+            <Button x:Name="RunButton" Grid.Column="2" Content="Run" MinWidth="96" Style="{StaticResource AccentButtonStyle}" Click="OnRunClick"/>
+        </Grid>
+    </Grid>
+</Window>
