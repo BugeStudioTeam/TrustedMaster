@@ -1,6 +1,7 @@
 using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using TrustedMaster.Services;
 using TrustedMaster.Views;
 
 namespace TrustedMaster
@@ -10,6 +11,7 @@ namespace TrustedMaster
         public MainWindow()
         {
             InitializeComponent();
+            WindowIconService.Apply(this);
             AppWindow.Resize(new Windows.Graphics.SizeInt32 { Width = 960, Height = 680 });
             MainNavigationView.SelectedItem = MainNavigationView.MenuItems[0];
         }

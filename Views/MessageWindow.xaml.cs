@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using TrustedMaster.Services;
 
 namespace TrustedMaster.Views
 {
@@ -11,6 +12,7 @@ namespace TrustedMaster.Views
         public MessageWindow(string title, string message)
         {
             InitializeComponent();
+            WindowIconService.Apply(this);
 
             Title = title;
             TitleText.Text = title;

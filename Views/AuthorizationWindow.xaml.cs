@@ -23,6 +23,7 @@ namespace TrustedMaster.Views
         public AuthorizationWindow(string applicationPath, ElevationUser user, bool enableAllPrivileges)
         {
             InitializeComponent();
+            WindowIconService.Apply(this);
 
             _applicationPath = applicationPath;
             _user = user;
