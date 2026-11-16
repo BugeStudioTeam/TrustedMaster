@@ -10,14 +10,14 @@
 
   <Identity
     Name="5454dfcc-8457-4bc3-833b-40caf1fb4f0d"
-    Publisher="CN=Buge"
+    Publisher="CN=BugeStudio"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="5454dfcc-8457-4bc3-833b-40caf1fb4f0d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>TrustedMaster</DisplayName>
-    <PublisherDisplayName>Buge</PublisherDisplayName>
+    <PublisherDisplayName>BugeStudio</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
