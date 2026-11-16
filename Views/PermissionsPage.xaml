@@ -5,30 +5,56 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:TrustedMaster.Models"
     mc:Ignorable="d">
 
-    <Grid Padding="40" RowSpacing="20">
+    <Grid Padding="32" RowSpacing="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Manage Authorized Applications" FontSize="28" FontWeight="SemiBold"/>
+        <TextBlock Text="Permissions" FontSize="28" FontWeight="SemiBold"/>
 
-        <StackPanel Grid.Row="1" Spacing="10">
-            <TextBlock Text="Applications that have been granted elevated privileges." TextWrapping="Wrap" FontSize="16" Opacity="0.7"/>
+        <TextBlock Grid.Row="1" Text="Only applications launched through TrustedMaster are listed here. Every successful launch is recorded automatically." TextWrapping="Wrap" Opacity="0.7"/>
 
-            <ListView x:Name="AppsListView" Height="300">
+        <Grid Grid.Row="2">
+            <ListView x:Name="AuthorizedAppsListView" SelectionMode="None">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Spacing="20">
-                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding Status}" VerticalAlignment="Center" FontStyle="Italic" Opacity="0.6"/>
-                        </StackPanel>
+                    <DataTemplate x:DataType="models:AuthorizedApp">
+                        <Grid ColumnSpacing="12" Padding="0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon Glyph="&#xE7C3;" FontSize="24" VerticalAlignment="Center"/>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{x:Bind Path}" FontSize="12" Opacity="0.6" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                <TextBlock Text="{x:Bind UserMode}" FontSize="12" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{x:Bind LastRunText}" FontSize="12" Opacity="0.6" HorizontalAlignment="Right"/>
+                            </StackPanel>
+
+                            <Button Grid.Column="3" Content="Revoke" VerticalAlignment="Center" Tag="{x:Bind Path}" Click="OnRevokeClick"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackPanel>
+
+            <TextBlock x:Name="EmptyStateText" Text="No authorized applications have been recorded yet." Opacity="0.6" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed"/>
+        </Grid>
     </Grid>
 </Page>

@@ -7,38 +7,29 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Padding="40" RowSpacing="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer>
+        <StackPanel Padding="32" Spacing="20" HorizontalAlignment="Left">
+            <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold"/>
 
-        <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold"/>
+            <TextBlock Text="Defaults applied when TrustedMaster starts." Opacity="0.7" TextWrapping="Wrap"/>
 
-        <StackPanel Grid.Row="1" Spacing="15">
-            <StackPanel Orientation="Horizontal" Spacing="20">
-                <TextBlock Text="Application Language:" VerticalAlignment="Center" FontSize="16"/>
-                <ComboBox x:Name="LanguageComboBox" Width="150">
-                    <ComboBoxItem Content="English" IsSelected="True"/>
-                    <ComboBoxItem Content="简体中文"/>
-                </ComboBox>
+            <ComboBox x:Name="DefaultUserModeComboBox" Header="Default user mode" MinWidth="260" HorizontalAlignment="Left">
+                <ComboBoxItem Content="TrustedInstaller" Tag="TrustedInstaller"/>
+                <ComboBoxItem Content="SYSTEM" Tag="System"/>
+                <ComboBoxItem Content="Current User" Tag="CurrentUser"/>
+                <ComboBoxItem Content="Current Process" Tag="CurrentProcess"/>
+            </ComboBox>
+
+            <ToggleSwitch x:Name="EnableAllPrivilegesToggle" Header="Enable all privileges by default" OnContent="On" OffContent="Off"/>
+
+            <TextBlock x:Name="AuthorizedCountText" Opacity="0.7"/>
+
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <Button Content="Save" Style="{StaticResource AccentButtonStyle}" Click="OnSaveClick"/>
+                <Button Content="Clear authorized applications" Click="OnClearAuthorizedClick"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Spacing="20">
-                <TextBlock Text="Default Privilege Level:" VerticalAlignment="Center" FontSize="16"/>
-                <ComboBox x:Name="DefaultPrivilegeComboBox" Width="200">
-                    <ComboBoxItem Content="Administrator"/>
-                    <ComboBoxItem Content="SYSTEM"/>
-                    <ComboBoxItem Content="TrustedInstaller"/>
-                </ComboBox>
-            </StackPanel>
-
-            <ToggleSwitch x:Name="AutoRunToggle" Header="Auto-run on startup" OnContent="Yes" OffContent="No" IsOn="True"/>
-
-            <Button Content="Apply Settings" Click="OnApplySettingsClick" Style="{StaticResource AccentButtonStyle}"/>
+            <TextBlock x:Name="StatusText" Opacity="0.7" TextWrapping="Wrap"/>
         </StackPanel>
-
-        <TextBlock x:Name="SettingsStatusText" Grid.Row="2" Text="Settings loaded." FontSize="14" Opacity="0.6" VerticalAlignment="Bottom"/>
-    </Grid>
+    </ScrollViewer>
 </Page>

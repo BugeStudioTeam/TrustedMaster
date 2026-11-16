@@ -1,32 +1,32 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using System.Collections.Generic;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using TrustedMaster.Models;
+using TrustedMaster.Services;
 
 namespace TrustedMaster.Views
 {
     public sealed partial class PermissionsPage : Page
     {
-        public class AppItem
-        {
-            public string Name { get; set; }
-            public string Status { get; set; }
-        }
-
         public PermissionsPage()
         {
             InitializeComponent();
-            LoadSampleData();
+            LoadApplications();
         }
 
-        private void LoadSampleData()
+        private void LoadApplications()
         {
-            var items = new List<AppItem>
+            var items = AuthorizedAppStore.GetAll();
+            AuthorizedAppsListView.ItemsSource = items;
+            EmptyStateText.Visibility = items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void OnRevokeClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is string path)
             {
-                new AppItem { Name = "TrustedMaster.Core", Status = "Authorized" },
-                new AppItem { Name = "PowerShell (Admin)", Status = "Authorized" },
-                new AppItem { Name = "Command Prompt", Status = "Pending" },
-                new AppItem { Name = "Windows Explorer", Status = "Denied" },
-            };
-            AppsListView.ItemsSource = items;
+                AuthorizedAppStore.Remove(path);
+                LoadApplications();
+            }
         }
     }
-}   
+}
