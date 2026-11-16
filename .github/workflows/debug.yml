@@ -1,0 +1,41 @@
+name: Build Debug
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore dependencies
+      run: dotnet restore TrustedMaster.csproj
+
+    - name: Build Debug
+      run: >
+        msbuild TrustedMaster.csproj
+        /p:Configuration=Debug
+        /p:Platform=x64
+        /p:RuntimeIdentifier=win-x64
+
+    - name: Upload Debug Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TrustedMaster-Debug-x64
+        path: bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\
+        if-no-files-found: error
