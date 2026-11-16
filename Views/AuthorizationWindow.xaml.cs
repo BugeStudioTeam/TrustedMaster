@@ -36,6 +36,19 @@ namespace TrustedMaster.Views
 
             AppWindow.Resize(new Windows.Graphics.SizeInt32 { Width = 520, Height = 400 });
             Closed += OnClosed;
+            _ = LoadIconAsync();
+        }
+
+        private async Task LoadIconAsync()
+        {
+            Microsoft.UI.Xaml.Media.ImageSource? icon = await FileIconProvider.GetIconAsync(_applicationPath, 32);
+
+            if (icon is not null)
+            {
+                ApplicationIcon.Source = icon;
+                ApplicationIcon.Visibility = Visibility.Visible;
+                FallbackIcon.Visibility = Visibility.Collapsed;
+            }
         }
 
         public Task<bool> WaitForLaunchAsync()

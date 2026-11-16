@@ -30,7 +30,9 @@ namespace TrustedMaster.Services
                     return;
                 }
 
-                bool hasCommandHandler = File.Exists(handlerPath) && Environment.Is64BitProcess == Environment.Is64BitOperatingSystem;
+                bool hasCommandHandler = File.Exists(handlerPath) &&
+                    Environment.Is64BitProcess == Environment.Is64BitOperatingSystem &&
+                    HasDotNetRuntime();
 
                 if (hasCommandHandler)
                 {
@@ -77,6 +79,60 @@ namespace TrustedMaster.Services
             catch
             {
             }
+        }
+
+        public static void Unregister()
+        {
+            try
+            {
+                Registry.CurrentUser.DeleteSubKeyTree(@"Software\Classes\*\shell\TrustedMaster", false);
+                Registry.CurrentUser.DeleteSubKeyTree(@"Software\Classes\CLSID\" + CommandClsid, false);
+                SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, IntPtr.Zero, IntPtr.Zero);
+            }
+            catch
+            {
+            }
+        }
+
+        private static bool HasDotNetRuntime()
+        {
+            string[] roots =
+            {
+                Environment.GetEnvironmentVariable("DOTNET_ROOT"),
+                Environment.GetEnvironmentVariable("DOTNET_ROOT_X64"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet")
+            };
+
+            foreach (string? root in roots)
+            {
+                if (string.IsNullOrWhiteSpace(root))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    string sharedDirectory = Path.Combine(root, "shared", "Microsoft.NETCore.App");
+
+                    if (!Directory.Exists(sharedDirectory))
+                    {
+                        continue;
+                    }
+
+                    foreach (string versionDirectory in Directory.GetDirectories(sharedDirectory))
+                    {
+                        if (Path.GetFileName(versionDirectory).StartsWith("8.", StringComparison.Ordinal))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                catch
+                {
+                }
+            }
+
+            return false;
         }
     }
 }

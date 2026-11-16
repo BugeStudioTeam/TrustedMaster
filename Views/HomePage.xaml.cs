@@ -18,8 +18,35 @@ namespace TrustedMaster.Views
         {
             InitializeComponent();
             _settings = AppSettings.Load();
+            LoadSystemInfo();
             LoadAuthorizedApplications();
             ApplyDefaults();
+        }
+
+        private void LoadSystemInfo()
+        {
+            Microsoft.UI.Dispatching.DispatcherQueue? queue = DispatcherQueue;
+
+            _ = Task.Run(() =>
+            {
+                SystemInfo info = SystemInfoProvider.Get();
+
+                if (queue is not null)
+                {
+                    queue.TryEnqueue(() => ApplySystemInfo(info));
+                }
+            });
+        }
+
+        private void ApplySystemInfo(SystemInfo info)
+        {
+            ActivationValueText.Text = info.Activation;
+            SystemNameValueText.Text = info.OperatingSystem;
+            SystemVersionValueText.Text = info.Version;
+            DeviceModelValueText.Text = info.DeviceModel;
+            CpuValueText.Text = info.Processor;
+            RamValueText.Text = info.Memory;
+            StorageValueText.Text = info.Storage;
         }
 
         private void ApplyDefaults()

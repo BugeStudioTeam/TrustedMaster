@@ -19,7 +19,16 @@ namespace TrustedMaster
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            _ = Task.Run(ContextMenuRegistrar.EnsureRegistered);
+            AppSettings startupSettings = AppSettings.Load();
+
+            if (startupSettings.ContextMenuEnabled)
+            {
+                _ = Task.Run(ContextMenuRegistrar.EnsureRegistered);
+            }
+            else
+            {
+                _ = Task.Run(ContextMenuRegistrar.Unregister);
+            }
 
             string? shellTargetPath = ShellLaunchArguments.GetTargetPath(Environment.GetCommandLineArgs());
             if (shellTargetPath is null)

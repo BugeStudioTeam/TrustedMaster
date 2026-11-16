@@ -22,6 +22,8 @@
 
             <ToggleSwitch x:Name="EnableAllPrivilegesToggle" Header="Enable all privileges by default" OnContent="On" OffContent="Off"/>
 
+            <ToggleSwitch x:Name="ContextMenuToggle" Header="Run as TrustedMaster context menu" OnContent="On" OffContent="Off" Toggled="OnContextMenuToggled"/>
+
             <TextBlock x:Name="AuthorizedCountText" Opacity="0.7"/>
 
             <StackPanel Orientation="Horizontal" Spacing="12">

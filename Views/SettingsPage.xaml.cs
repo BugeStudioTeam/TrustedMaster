@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using TrustedMaster.Services;
@@ -9,6 +10,8 @@ namespace TrustedMaster.Views
     {
         private readonly AppSettings _settings;
 
+        private bool _isLoading;
+
         public SettingsPage()
         {
             InitializeComponent();
@@ -18,11 +21,13 @@ namespace TrustedMaster.Views
 
         private void LoadSettings()
         {
+            _isLoading = true;
             DefaultUserModeComboBox.SelectedIndex = 0;
+            ElevationUser defaultUser = _settings.DefaultUserMode.FromTag();
 
             foreach (object item in DefaultUserModeComboBox.Items)
             {
-                if (item is ComboBoxItem comboBoxItem && comboBoxItem.Tag is string tag && string.Equals(tag, _settings.DefaultUserMode, StringComparison.OrdinalIgnoreCase))
+                if (item is ComboBoxItem comboBoxItem && comboBoxItem.Tag is string tag && ElevationUserExtensions.FromTag(tag) == defaultUser)
                 {
                     DefaultUserModeComboBox.SelectedItem = comboBoxItem;
                     break;
@@ -30,7 +35,31 @@ namespace TrustedMaster.Views
             }
 
             EnableAllPrivilegesToggle.IsOn = _settings.DefaultEnableAllPrivileges;
+            ContextMenuToggle.IsOn = _settings.ContextMenuEnabled;
+            _isLoading = false;
             UpdateAuthorizedCount();
+        }
+
+        private void OnContextMenuToggled(object sender, RoutedEventArgs e)
+        {
+            if (_isLoading)
+            {
+                return;
+            }
+
+            _settings.ContextMenuEnabled = ContextMenuToggle.IsOn;
+            _settings.Save();
+
+            if (ContextMenuToggle.IsOn)
+            {
+                _ = Task.Run(ContextMenuRegistrar.EnsureRegistered);
+                StatusText.Text = "Context menu enabled.";
+            }
+            else
+            {
+                _ = Task.Run(ContextMenuRegistrar.Unregister);
+                StatusText.Text = "Context menu disabled and removed from the registry.";
+            }
         }
 
         private void UpdateAuthorizedCount()

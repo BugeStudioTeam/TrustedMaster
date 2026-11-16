@@ -10,6 +10,8 @@ namespace TrustedMaster.Services
 
         public bool DefaultEnableAllPrivileges { get; set; }
 
+        public bool ContextMenuEnabled { get; set; } = true;
+
         public static AppSettings Load()
         {
             try

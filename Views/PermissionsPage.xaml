@@ -27,7 +27,7 @@
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:AuthorizedApp">
+                    <DataTemplate x:DataType="models:AuthorizedAppItem">
                         <Grid ColumnSpacing="12" Padding="0,8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -36,7 +36,10 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <FontIcon Glyph="&#xE7C3;" FontSize="24" VerticalAlignment="Center"/>
+                            <Grid Width="24" Height="24" VerticalAlignment="Center">
+                                <FontIcon Glyph="&#xE7C3;" FontSize="24"/>
+                                <Image Source="{x:Bind Icon}" Stretch="Uniform"/>
+                            </Grid>
 
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                 <TextBlock Text="{x:Bind Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
