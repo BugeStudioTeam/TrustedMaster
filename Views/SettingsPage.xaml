@@ -7,87 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <Style x:Key="LeftLabelToggleSwitchStyle" TargetType="ToggleSwitch">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ToggleSwitch">
-                        <Grid Background="{TemplateBinding Background}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <ContentPresenter x:Name="ContentPresenter"
-                                              Grid.Column="0"
-                                              Content="{TemplateBinding OffContent}"
-                                              Margin="0,0,12,0"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Right"/>
-
-                            <Grid x:Name="SwitchArea" Grid.Column="1" VerticalAlignment="Center">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Border x:Name="OuterBorder"
-                                        Grid.Column="0"
-                                        Width="40"
-                                        Height="20"
-                                        CornerRadius="10"
-                                        Background="{ThemeResource ToggleSwitchFillOff}"
-                                        BorderBrush="{ThemeResource ToggleSwitchStrokeOff}"
-                                        BorderThickness="1">
-
-                                    <Ellipse x:Name="SwitchKnob"
-                                             Width="12"
-                                             Height="12"
-                                             Fill="{ThemeResource ToggleSwitchKnobFillOff}"
-                                             HorizontalAlignment="Left"
-                                             Margin="3,0,0,0"/>
-                                </Border>
-                            </Grid>
-                            
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="PointerOver"/>
-                                    <VisualState x:Name="Pressed"/>
-                                    <VisualState x:Name="Disabled"/>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="ToggleStates">
-                                    <VisualState x:Name="Off">
-                                        <VisualState.Setters>
-                                            <Setter Target="OuterBorder.Background" Value="{ThemeResource ToggleSwitchFillOff}"/>
-                                            <Setter Target="OuterBorder.BorderBrush" Value="{ThemeResource ToggleSwitchStrokeOff}"/>
-                                            <Setter Target="SwitchKnob.Fill" Value="{ThemeResource ToggleSwitchKnobFillOff}"/>
-                                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Left"/>
-                                            <Setter Target="SwitchKnob.Margin" Value="3,0,0,0"/>
-                                            <Setter Target="ContentPresenter.Content" Value="{TemplateBinding OffContent}"/>
-                                            <Setter Target="ContentPresenter.Visibility" Value="{TemplateBinding OffContentVisibility}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="On">
-                                        <VisualState.Setters>
-                                            <Setter Target="OuterBorder.Background" Value="{ThemeResource ToggleSwitchFillOn}"/>
-                                            <Setter Target="OuterBorder.BorderBrush" Value="{ThemeResource ToggleSwitchStrokeOn}"/>
-                                            <Setter Target="SwitchKnob.Fill" Value="{ThemeResource ToggleSwitchKnobFillOn}"/>
-                                            <Setter Target="SwitchKnob.HorizontalAlignment" Value="Right"/>
-                                            <Setter Target="SwitchKnob.Margin" Value="0,0,3,0"/>
-                                            <Setter Target="ContentPresenter.Content" Value="{TemplateBinding OnContent}"/>
-                                            <Setter Target="ContentPresenter.Visibility" Value="{TemplateBinding OnContentVisibility}"/>
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
-
     <ScrollViewer>
         <StackPanel Padding="32,24,32,24" Spacing="4" HorizontalAlignment="Stretch">
             <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16"/>
@@ -133,7 +52,7 @@
                         <TextBlock Text="Enable every available privilege on the launched application token." Opacity="0.7" FontSize="12" TextWrapping="Wrap"/>
                     </StackPanel>
 
-                    <ToggleSwitch x:Name="EnableAllPrivilegesToggle" Grid.Column="2" VerticalAlignment="Center" Style="{StaticResource LeftLabelToggleSwitchStyle}" OnContent="On" OffContent="Off" Toggled="OnEnableAllPrivilegesToggled"/>
+                    <ToggleSwitch x:Name="EnableAllPrivilegesToggle" Grid.Column="2" VerticalAlignment="Center" OnContent="On" OffContent="Off" Toggled="OnEnableAllPrivilegesToggled"/>
                 </Grid>
             </Border>
 
@@ -154,7 +73,7 @@
                         <TextBlock Text="Add a File Explorer context menu entry for running applications with TrustedMaster." Opacity="0.7" FontSize="12" TextWrapping="Wrap"/>
                     </StackPanel>
 
-                    <ToggleSwitch x:Name="ContextMenuToggle" Grid.Column="2" VerticalAlignment="Center" Style="{StaticResource LeftLabelToggleSwitchStyle}" OnContent="On" OffContent="Off" Toggled="OnContextMenuToggled"/>
+                    <ToggleSwitch x:Name="ContextMenuToggle" Grid.Column="2" VerticalAlignment="Center" OnContent="On" OffContent="Off" Toggled="OnContextMenuToggled"/>
                 </Grid>
             </Border>
 
