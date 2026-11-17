@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -38,14 +39,27 @@
 
         <StackPanel Grid.Row="2" Spacing="4">
             <TextBlock x:Name="OriginText" Opacity="0.8" TextWrapping="Wrap"/>
-            <TextBlock x:Name="UserText" Opacity="0.8" TextWrapping="Wrap"/>
         </StackPanel>
 
-        <CheckBox x:Name="EnableAllPrivilegesCheckBox" Grid.Row="3" Content="Enable All Privileges"/>
+        <Grid Grid.Row="3" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="72"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="User:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="UserModeComboBox" Grid.Column="1" HorizontalAlignment="Stretch" SelectedIndex="0">
+                <ComboBoxItem Content="TrustedInstaller" Tag="TrustedInstaller"/>
+                <ComboBoxItem Content="SYSTEM" Tag="System"/>
+                <ComboBoxItem Content="Current User" Tag="CurrentUser"/>
+                <ComboBoxItem Content="Current Process" Tag="CurrentProcess"/>
+            </ComboBox>
+        </Grid>
 
-        <InfoBar x:Name="StatusInfoBar" Grid.Row="4" IsOpen="False" IsClosable="False" VerticalAlignment="Top"/>
+        <CheckBox x:Name="EnableAllPrivilegesCheckBox" Grid.Row="4" Content="Enable All Privileges"/>
 
-        <Grid Grid.Row="5" ColumnSpacing="8">
+        <InfoBar x:Name="StatusInfoBar" Grid.Row="5" IsOpen="False" IsClosable="False" VerticalAlignment="Top"/>
+
+        <Grid Grid.Row="6" ColumnSpacing="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
