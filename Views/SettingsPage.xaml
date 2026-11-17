@@ -8,27 +8,27 @@
     mc:Ignorable="d">
 
     <ScrollViewer>
-        <StackPanel Padding="32,24,32,24" Spacing="4" HorizontalAlignment="Stretch">
-            <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16"/>
+        <StackPanel Padding="36,28,36,28" Spacing="0" HorizontalAlignment="Stretch">
+            <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,20"/>
 
-            <TextBlock Text="Launching" FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <TextBlock Text="Launching" FontWeight="SemiBold" Margin="0,0,0,6"/>
 
-            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12">
-                <Grid ColumnSpacing="16">
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="14,10">
+                <Grid ColumnSpacing="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <FontIcon Glyph="&#xE77B;" FontSize="20" VerticalAlignment="Center"/>
+                    <FontIcon Glyph="&#xE77B;" FontSize="18" VerticalAlignment="Center"/>
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
                         <TextBlock Text="Default user mode" FontWeight="SemiBold"/>
                         <TextBlock Text="User identity used when launching applications by default." Opacity="0.7" FontSize="12" TextWrapping="Wrap"/>
                     </StackPanel>
 
-                    <ComboBox x:Name="DefaultUserModeComboBox" Grid.Column="2" MinWidth="180" VerticalAlignment="Center" SelectionChanged="OnDefaultUserModeChanged">
+                    <ComboBox x:Name="DefaultUserModeComboBox" Grid.Column="2" MinWidth="160" VerticalAlignment="Center" SelectionChanged="OnDefaultUserModeChanged">
                         <ComboBoxItem Content="TrustedInstaller" Tag="TrustedInstaller"/>
                         <ComboBoxItem Content="SYSTEM" Tag="System"/>
                         <ComboBoxItem Content="Current User" Tag="CurrentUser"/>
@@ -37,15 +37,15 @@
                 </Grid>
             </Border>
 
-            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12" Margin="0,4,0,0">
-                <Grid ColumnSpacing="16">
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="14,10" Margin="0,2,0,0">
+                <Grid ColumnSpacing="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <FontIcon Glyph="&#xE72E;" FontSize="20" VerticalAlignment="Center"/>
+                    <FontIcon Glyph="&#xE72E;" FontSize="18" VerticalAlignment="Center"/>
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
                         <TextBlock Text="Enable all privileges by default" FontWeight="SemiBold"/>
@@ -56,17 +56,17 @@
                 </Grid>
             </Border>
 
-            <TextBlock Text="Integration" FontWeight="SemiBold" Margin="0,16,0,4"/>
+            <TextBlock Text="Integration" FontWeight="SemiBold" Margin="0,18,0,6"/>
 
-            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12">
-                <Grid ColumnSpacing="16">
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="14,10">
+                <Grid ColumnSpacing="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <FontIcon Glyph="&#xE8A7;" FontSize="20" VerticalAlignment="Center"/>
+                    <FontIcon Glyph="&#xE8A7;" FontSize="18" VerticalAlignment="Center"/>
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
                         <TextBlock Text="Run as TrustedMaster context menu" FontWeight="SemiBold"/>
@@ -77,17 +77,17 @@
                 </Grid>
             </Border>
 
-            <TextBlock Text="Data" FontWeight="SemiBold" Margin="0,16,0,4"/>
+            <TextBlock Text="Data" FontWeight="SemiBold" Margin="0,18,0,6"/>
 
-            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12">
-                <Grid ColumnSpacing="16">
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="14,10">
+                <Grid ColumnSpacing="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <FontIcon Glyph="&#xE8F1;" FontSize="20" VerticalAlignment="Center"/>
+                    <FontIcon Glyph="&#xE8F1;" FontSize="18" VerticalAlignment="Center"/>
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="1">
                         <TextBlock Text="Authorized applications" FontWeight="SemiBold"/>
@@ -98,7 +98,7 @@
                 </Grid>
             </Border>
 
-            <TextBlock x:Name="StatusText" Opacity="0.7" TextWrapping="Wrap" Margin="0,16,0,0"/>
+            <TextBlock x:Name="StatusText" Opacity="0.7" TextWrapping="Wrap" Margin="0,14,0,0"/>
         </StackPanel>
     </ScrollViewer>
 </Page>
