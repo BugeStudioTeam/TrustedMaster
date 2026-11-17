@@ -7,5 +7,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid/>
+    <ScrollViewer>
+        <StackPanel Padding="32" Spacing="16" HorizontalAlignment="Stretch">
+            <TextBlock Text="Modules" FontSize="28" FontWeight="SemiBold"/>
+
+            <TextBlock Text="Optional modules and integrations that extend TrustedMaster." Opacity="0.7" TextWrapping="Wrap" Margin="0,0,0,8"/>
+
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12">
+                <StackPanel Spacing="2">
+                    <TextBlock Text="No modules available" FontWeight="SemiBold"/>
+                    <TextBlock Text="Modules will appear here once they are added to this build." Opacity="0.7" FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
