@@ -40,6 +40,30 @@ namespace TrustedMaster.Views
             UpdateAuthorizedCount();
         }
 
+        private void OnDefaultUserModeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_isLoading)
+            {
+                return;
+            }
+
+            _settings.DefaultUserMode = DefaultUserModeComboBox.SelectedItem is ComboBoxItem item && item.Tag is string tag ? tag : "TrustedInstaller";
+            _settings.Save();
+            StatusText.Text = "Default user mode saved.";
+        }
+
+        private void OnEnableAllPrivilegesToggled(object sender, RoutedEventArgs e)
+        {
+            if (_isLoading)
+            {
+                return;
+            }
+
+            _settings.DefaultEnableAllPrivileges = EnableAllPrivilegesToggle.IsOn;
+            _settings.Save();
+            StatusText.Text = "Default privileges setting saved.";
+        }
+
         private void OnContextMenuToggled(object sender, RoutedEventArgs e)
         {
             if (_isLoading)
@@ -65,14 +89,6 @@ namespace TrustedMaster.Views
         private void UpdateAuthorizedCount()
         {
             AuthorizedCountText.Text = AuthorizedAppStore.GetAll().Count + " authorized application(s) recorded.";
-        }
-
-        private void OnSaveClick(object sender, RoutedEventArgs e)
-        {
-            _settings.DefaultUserMode = DefaultUserModeComboBox.SelectedItem is ComboBoxItem item && item.Tag is string tag ? tag : "TrustedInstaller";
-            _settings.DefaultEnableAllPrivileges = EnableAllPrivilegesToggle.IsOn;
-            _settings.Save();
-            StatusText.Text = "Settings saved.";
         }
 
         private void OnClearAuthorizedClick(object sender, RoutedEventArgs e)
