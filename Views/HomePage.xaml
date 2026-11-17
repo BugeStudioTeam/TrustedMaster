@@ -8,18 +8,14 @@
     mc:Ignorable="d">
 
     <ScrollViewer>
-        <Grid Padding="32" RowSpacing="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <StackPanel Padding="32" Spacing="16" HorizontalAlignment="Stretch">
+            <TextBlock Text="Home" FontSize="28" FontWeight="SemiBold"/>
 
-            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="20,16">
+            <TextBlock Text="Run any application as TrustedInstaller, SYSTEM, or another identity." Opacity="0.7" TextWrapping="Wrap" Margin="0,0,0,8"/>
+
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12">
                 <StackPanel Spacing="12">
-                    <TextBlock Text="System Information" FontSize="14" Opacity="0.8"/>
+                    <TextBlock Text="System Information" FontWeight="SemiBold"/>
 
                     <Grid ColumnSpacing="16" RowSpacing="8">
                         <Grid.ColumnDefinitions>
@@ -60,9 +56,9 @@
                 </StackPanel>
             </Border>
 
-            <Border Grid.Row="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="20,16">
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12">
                 <StackPanel Spacing="16">
-                    <TextBlock Text="Mode Settings" FontSize="14" Opacity="0.8"/>
+                    <TextBlock Text="Mode Settings" FontWeight="SemiBold"/>
 
                     <Grid ColumnSpacing="12">
                         <Grid.ColumnDefinitions>
@@ -82,23 +78,25 @@
                 </StackPanel>
             </Border>
 
-            <Grid Grid.Row="2" ColumnSpacing="12">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="72"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Open:" VerticalAlignment="Center"/>
-                <ComboBox x:Name="ApplicationComboBox" Grid.Column="1" HorizontalAlignment="Stretch" IsEditable="True" PlaceholderText="Select or type an application path"/>
-                <Button Grid.Column="2" Content="Browse" MinWidth="96" Click="OnBrowseClick"/>
-            </Grid>
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="4" Padding="16,12">
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="72"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Open:" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="ApplicationComboBox" Grid.Column="1" HorizontalAlignment="Stretch" IsEditable="True" PlaceholderText="Select or type an application path"/>
+                    <Button Grid.Column="2" Content="Browse" MinWidth="96" Click="OnBrowseClick"/>
+                </Grid>
+            </Border>
 
-            <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="12">
+            <StackPanel Orientation="Horizontal" Spacing="12">
                 <Button x:Name="RunButton" Content="Run" MinWidth="120" Style="{StaticResource AccentButtonStyle}" Click="OnRunClick"/>
                 <ProgressRing x:Name="RunProgressRing" Width="20" Height="20" IsActive="False" VerticalAlignment="Center"/>
             </StackPanel>
 
-            <InfoBar x:Name="StatusInfoBar" Grid.Row="4" IsOpen="False" IsClosable="True"/>
-        </Grid>
+            <InfoBar x:Name="StatusInfoBar" IsOpen="False" IsClosable="True"/>
+        </StackPanel>
     </ScrollViewer>
 </Page>
