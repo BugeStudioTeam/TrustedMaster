@@ -8,27 +8,82 @@
     mc:Ignorable="d">
 
     <ScrollViewer>
-        <StackPanel Padding="32" Spacing="20" HorizontalAlignment="Left">
+        <StackPanel Padding="32" Spacing="20" HorizontalAlignment="Stretch">
             <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold"/>
 
             <TextBlock Text="Defaults applied when TrustedMaster starts." Opacity="0.7" TextWrapping="Wrap"/>
 
-            <ComboBox x:Name="DefaultUserModeComboBox" Header="Default user mode" MinWidth="260" HorizontalAlignment="Left">
-                <ComboBoxItem Content="TrustedInstaller" Tag="TrustedInstaller"/>
-                <ComboBoxItem Content="SYSTEM" Tag="System"/>
-                <ComboBoxItem Content="Current User" Tag="CurrentUser"/>
-                <ComboBoxItem Content="Current Process" Tag="CurrentProcess"/>
-            </ComboBox>
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="20,16">
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-            <ToggleSwitch x:Name="EnableAllPrivilegesToggle" Header="Enable all privileges by default" OnContent="On" OffContent="Off"/>
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Text="Default user mode" FontWeight="SemiBold"/>
+                        <TextBlock Text="User identity used when launching applications by default." Opacity="0.7" TextWrapping="Wrap" FontSize="12"/>
+                    </StackPanel>
 
-            <ToggleSwitch x:Name="ContextMenuToggle" Header="Run as TrustedMaster context menu" OnContent="On" OffContent="Off" Toggled="OnContextMenuToggled"/>
+                    <ComboBox x:Name="DefaultUserModeComboBox" Grid.Column="1" MinWidth="200" VerticalAlignment="Center">
+                        <ComboBoxItem Content="TrustedInstaller" Tag="TrustedInstaller"/>
+                        <ComboBoxItem Content="SYSTEM" Tag="System"/>
+                        <ComboBoxItem Content="Current User" Tag="CurrentUser"/>
+                        <ComboBoxItem Content="Current Process" Tag="CurrentProcess"/>
+                    </ComboBox>
+                </Grid>
+            </Border>
 
-            <TextBlock x:Name="AuthorizedCountText" Opacity="0.7"/>
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="20,16">
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Text="Enable all privileges by default" FontWeight="SemiBold"/>
+                        <TextBlock Text="Enable every available privilege on the launched application token." Opacity="0.7" TextWrapping="Wrap" FontSize="12"/>
+                    </StackPanel>
+
+                    <ToggleSwitch x:Name="EnableAllPrivilegesToggle" Grid.Column="1" VerticalAlignment="Center" OnContent="On" OffContent="Off"/>
+                </Grid>
+            </Border>
+
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="20,16">
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Text="Run as TrustedMaster context menu" FontWeight="SemiBold"/>
+                        <TextBlock Text="Add a File Explorer context menu entry for running applications with TrustedMaster." Opacity="0.7" TextWrapping="Wrap" FontSize="12"/>
+                    </StackPanel>
+
+                    <ToggleSwitch x:Name="ContextMenuToggle" Grid.Column="1" VerticalAlignment="Center" OnContent="On" OffContent="Off" Toggled="OnContextMenuToggled"/>
+                </Grid>
+            </Border>
+
+            <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="20,16">
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Text="Authorized applications" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="AuthorizedCountText" Opacity="0.7" TextWrapping="Wrap" FontSize="12"/>
+                    </StackPanel>
+
+                    <Button Grid.Column="1" Content="Clear authorized applications" VerticalAlignment="Center" Click="OnClearAuthorizedClick"/>
+                </Grid>
+            </Border>
 
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <Button Content="Save" Style="{StaticResource AccentButtonStyle}" Click="OnSaveClick"/>
-                <Button Content="Clear authorized applications" Click="OnClearAuthorizedClick"/>
             </StackPanel>
 
             <TextBlock x:Name="StatusText" Opacity="0.7" TextWrapping="Wrap"/>
